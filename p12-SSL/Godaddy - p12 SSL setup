@@ -1,0 +1,30 @@
+
+1) p12 Generate keystore
+
+   i. keytool -keysize 2048 -genkey -alias <ALIAS-NAME> -keyalg RSA -keystore <KEYSTORE-NAME>.keystore
+
+2) Generate CSR
+
+  ii. keytool -certreq -alias <ALIAS-NAME> -file <CSR-FILE-NAME>.txt -keystore <KEYSTORE-NAME>.keystore
+
+3) Convert keystore format to pkcs12 format, so that we can convert to pem format
+
+ iii. keytool -importkeystore -srckeystore <KEYSTORE-NAME>.keystore -destkeystore <KEYSTORE-NAME>.p12 -deststoretype pkcs12
+
+4) Convert pkcs12 format to pem format, so that we can use it while bundling ceritificate keystore
+
+  iv. openssl pkcs12 -in <KEYSTORE-NAME>.p12  -nodes -nocerts -out <KEYSTORE-NAME>.pem
+
+
+====================================================================================================================================================
+
+p12 Renewal - Download and use certificates from godaddy
+
+1) Download certificate files
+
+2) COPY contents from certificate file, gd_bundle-g2-g1 and paste into <FULL-CHAIN>.crt file in same order
+
+3) Create bundled certificate file including Public & Private key in pkcs12 format and use it in application
+
+   * openssl pkcs12 -export -in <FULL-CHAIN>.crt -inkey <KEYSTORE-NAME>.pem -out keystore.p12 -name <ALIAS-NAME> -CAfile gd_bundle-g2-g1.crt -caname "Go Daddy Secure Certificate Authority - G2"
+

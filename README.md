@@ -1,2 +1,2 @@
 # SSL-Config
-P12, RDS SSL, Lets encrypt Config steps
+SSL certificate cert change to p12 format SSL and RDS SSL config

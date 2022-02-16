@@ -1,0 +1,14 @@
+Lets encrypt SSL New SSL/Renewal SSL steps
+
+1) Generate Certificate
+
+   - sudo certbot certonly --manual --preferred-challenges dns-01 --server https://acme-v02.api.letsencrypt.org/directory -d <DOMANIN-NAME> -d <SUB/OTHER-DOMAIN-NAME>
+
+2) Move to directory where certificates would be saved by default (fullchain.pem, privkey.pem, cert.pem, chain.pem & README)
+
+   - cd /etc/letsencrypt/live/<DOMAIN-NAME>
+
+3) Create bundled certificate file including Public & Private key in pkcs12 format and use it in application
+
+   - openssl pkcs12 -export -in fullchain.pem -inkey privkey.pem -out keystore.p12 -name <ALIAS-NAME> -CAfile chain.pem -caname root
+

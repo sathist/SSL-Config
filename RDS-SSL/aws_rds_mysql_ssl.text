@@ -1,0 +1,14 @@
+#All region SSL 
+https://s3.amazonaws.com/rds-downloads/rds-combined-ca-bundle.pem
+
+#Asia Pacific (Mumbai)
+https://s3.amazonaws.com/rds-downloads/rds-ca-2019-ap-south-1.pem
+
+#pem file change to x509
+alias=$(openssl x509 -noout -text -in rds-ca-2019-ap-south-1.pem
+
+#Create pem to jks
+keytool -import -file rds-ca-2019-ap-south-1.pem -alias "${alias}" -storepass <storepassword> -keystore <truststore_name> -noprompt
+
+#View truststore
+keytool -list -v -keystore <truststore_name> -storepass <storepassword>
